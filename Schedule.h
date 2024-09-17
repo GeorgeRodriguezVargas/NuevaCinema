@@ -11,6 +11,7 @@ private:
 
 public:
 	Schedule();
+
 	void setTimetable(string& start, string& end, string& date);
 
 	string getInitialHour();

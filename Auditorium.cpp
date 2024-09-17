@@ -1,49 +1,55 @@
 #include "Auditorium.h"
 Auditorium::Auditorium() {
-	number = 0;
+	id_auditorium = 0;
 	price = " ";
 	projections = 0;
 	movieList = new Movie*[projections];
-	schedules = new Schedule[projections];
-	index = 0;
+	schedulesList = new Schedule[projections];
 	selectedRoom = new Auditorium*[projections * 2];
 	selectedIndex = new int[projections * 2];
 	optionCount = 0;
+	index = 0;
+
+	asientos = new int* [8];
+	for (int i = 0; i < 8; i++) {
+		asientos[i] = new int[8];
+
+	}
 }
 
 Auditorium::Auditorium(int number, int projections, string price, string date) {
-	this->number = number;
+	this->id_auditorium = number;
 	this->price = price;
 	this->projections = projections;
 	movieList = new Movie*[projections];
-	schedules = new Schedule[projections];
+	schedulesList = new Schedule[projections];
 	index = 0;
 	selectedRoom = new Auditorium * [projections * 2];
 	selectedIndex = new int[projections * 2];
 	optionCount = 0;
 }
 
-void Auditorium::setNumber(int number) { this->number = number; }
+void Auditorium::setNumber(int number) { this->id_auditorium = number; }
 void Auditorium::setProjections(int projections) { this->projections = projections; }
 void Auditorium::setPrice(int price) { this->price = price; }
 void Auditorium::setMovieList(Movie& movie, string start, string end, string date) {
 	if (index < projections) {
 		movieList[index] = &movie;
-		schedules[index].setTimetable(start, end, date);
+		schedulesList[index].setTimetable(start, end, date);
 		index++;
 	}
 }
 
-int Auditorium::getNumber() { return number; }
+int Auditorium::getNumber() { return id_auditorium; }
 int Auditorium::getProjections() { return projections; }
 string Auditorium::getPrice() { return price; }
 
 void Auditorium::showAuditoriumSchedules() {
 	for (int i = 0; i < index; i++) {
 			cout << "| " << movieList[i]->getName() << " |"
-				<< " | Inicio: " << schedules[i].getInitialHour() << " |"
-				<< " | Final: " << schedules[i].getEndHour() << " |"
-				<< " | Fecha: " << schedules[i].getDate() << " |"
+				<< " | Inicio: " << schedulesList[i].getInitialHour() << " |"
+				<< " | Final: " << schedulesList[i].getEndHour() << " |"
+				<< " | Fecha: " << schedulesList[i].getDate() << " |"
 				<< endl <<endl;
 	}
 }
@@ -53,9 +59,9 @@ void Auditorium::showMovieSchedules(Movie& movie, Auditorium& room) {
 	for (int i = 0; i < index; i++) {
 		if (movie.getName() == movieList[i]->getName()) {
 			cout << " Movie: " << movieList[i]->getName()
-				<< " Inicio: " << schedules[i].getInitialHour()
-				<< " Final: " << schedules[i].getEndHour()
-				<< " | Fecha: " << schedules[i].getDate() << " |"
+				<< " Inicio: " << schedulesList[i].getInitialHour()
+				<< " Final: " << schedulesList[i].getEndHour()
+				<< " | Fecha: " << schedulesList[i].getDate() << " |"
 				<< endl;
 
 			selectedRoom[optionCount] = this;
@@ -66,9 +72,9 @@ void Auditorium::showMovieSchedules(Movie& movie, Auditorium& room) {
 	for (int j = 0; j < room.index; j++) {
 		if (movie.getName() == room.movieList[j]->getName()) {
 			cout << " Movie: " << room.movieList[j]->getName()
-				<< " Inicio: " << room.schedules[j].getInitialHour()
-				<< " Final: " << room.schedules[j].getEndHour()
-				<< " | Fecha: " << schedules[j].getDate() << " |"
+				<< " Inicio: " << room.schedulesList[j].getInitialHour()
+				<< " Final: " << room.schedulesList[j].getEndHour()
+				<< " | Fecha: " << schedulesList[j].getDate() << " |"
 				<< endl;
 
 			selectedRoom[optionCount] = &room;
@@ -84,8 +90,8 @@ void Auditorium::selectSchedule(int option) {
 		cout << endl;
 		cout << " **Informacion sobre precio y demas para la venta** \n";
 		cout << "|Nombre: " << selectedRoom[option]->movieList[selectedIndex[option]]->getName() 
-		     << " | Inicio: " << selectedRoom[option]->schedules[selectedIndex[option]].getInitialHour() 
-		     << " | Final: " << selectedRoom[option]->schedules[selectedIndex[option]].getEndHour() << endl;
+		     << " | Inicio: " << selectedRoom[option]->schedulesList[selectedIndex[option]].getInitialHour() 
+		     << " | Final: " << selectedRoom[option]->schedulesList[selectedIndex[option]].getEndHour() << endl;
 	}
 }
 
@@ -99,7 +105,7 @@ void Auditorium::showAuditoriumInformation() {
 
 Auditorium::~Auditorium() {
 	delete[] movieList;
-	delete[] schedules;
+	delete[] schedulesList;
 	delete[] selectedRoom;
 	delete[] selectedIndex;
 }

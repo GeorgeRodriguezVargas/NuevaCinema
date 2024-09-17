@@ -7,14 +7,17 @@ using namespace std;
 class Auditorium
 {
 private:
-	int number;
+	int id_auditorium;
 	int projections;
 	string price;
+	int** asientos;
+
 	Movie** movieList;
-	Schedule* schedules;
-	int index;
+	Schedule* schedulesList;
 	Auditorium** selectedRoom;
 	int* selectedIndex;
+	
+	int index;
 	int optionCount;
 
 public:

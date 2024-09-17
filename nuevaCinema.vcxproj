@@ -130,11 +130,13 @@
     <ClCompile Include="Auditorium.cpp" />
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="nuevaCinema.cpp" />
+    <ClCompile Include="SalesTransaction.cpp" />
     <ClCompile Include="Schedule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Auditorium.h" />
     <ClInclude Include="Movie.h" />
+    <ClInclude Include="SalesTransaction.h" />
     <ClInclude Include="Schedule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
