@@ -1,7 +1,8 @@
 #pragma once
-#include <iostream>;
-
 using namespace std;
+#include <iostream>
+
+
 class Movie
 {
 private:
@@ -28,5 +29,6 @@ public:
 	int getYear();
 
 	void showMovieInformation();
+	~Movie();
 };
 

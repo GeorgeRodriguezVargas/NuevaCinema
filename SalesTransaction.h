@@ -1,23 +1,31 @@
 #pragma once
-#include <iostream>;
 using namespace std;
+#include <iostream>
+#include <cstdlib>   
+#include <ctime> 
 
 class SalesTransaction
 {
 private:
-	string id_number;
-	string card_number;
-	int  transaction_code;
-
+	string ID_number;
+	string cardNumber;
+	int  transactionCode;
+	double totalAmount;
+	
 public:
 	SalesTransaction();
-	SalesTransaction(string id_number, string card_number);
+	SalesTransaction(string ID_number, string cardNumber);
 
-	void setId_number(string id_number);
-	void setCard_number(string card_number);
+	void setId_number(string ID_number);
+	void setCard_number(string cardNumber);
+	void setTotalAmount(double amount);
 	void setTransactionCode();
 
 	string getId_number();
 	string getCard_number();
+	double getTotalAmount();
+	int getTransactionCode();
+
+	~SalesTransaction();
 };
 

@@ -1,16 +1,6 @@
 ﻿  Auditorium.cpp
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Movie.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Schedule.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Auditorium.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Movie.cpp
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Movie.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   nuevaCinema.cpp
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Movie.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Schedule.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Auditorium.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   SalesTransaction.cpp
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\SalesTransaction.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Schedule.cpp
-C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\Schedule.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\SalesTransaction.cpp(20,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating Code...
   nuevaCinema.vcxproj -> C:\Users\georg\OneDrive\Documentos\Programación\nuevaCinema\x64\Debug\nuevaCinema.exe

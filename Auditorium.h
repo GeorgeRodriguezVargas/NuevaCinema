@@ -1,42 +1,49 @@
 #pragma once
+using namespace std;
+#include <iostream>
 #include "Movie.h"
 #include "Schedule.h"
-#include <iostream>;
-using namespace std;
+#include "SalesTransaction.h"
 
 class Auditorium
 {
 private:
-	int id_auditorium;
-	int projections;
-	string price;
-	int** asientos;
-
+	int ID_auditorium;
+	int projections; //Number of sessions in each auditorium.
+	double price;
+	int rows;
+	int cols;
+	int** SeatsMatrix; 
+	int index;
 	Movie** movieList;
-	Schedule* schedulesList;
+	Schedule* schedulList;//Stores the schedul of each Movie.
+
+	//Information in Cpp.
 	Auditorium** selectedRoom;
 	int* selectedIndex;
-	
-	int index;
 	int optionCount;
 
 public:
 	Auditorium();
-	Auditorium(int number, int projections, string price, string date);
+	Auditorium(int number, int projections, double price);
 
 	void setNumber(int number);
 	void setProjections(int projections);
-	void setPrice(int price);
+	void setPrice(double price);
+	void initializeSeats(int rows, int cols);
 	void setMovieList(Movie& movie, string movieStart, string movieEnd, string date);
 
 	int getNumber();
 	int getProjections();
-	string getPrice();
+	double getPrice();
+	int getSeatsAvailable();
 
 	void showAuditoriumSchedules();
-	void showMovieSchedules(Movie& movie, Auditorium& room);
+	void showMovieProjections(Movie& movie, Auditorium& room);
 	void selectSchedule(int option);
 	void showAuditoriumInformation();
+	void printMatriz();
+	void selectSeats(int row, int col, int option, SalesTransaction& client);
 	~Auditorium();
 };
 

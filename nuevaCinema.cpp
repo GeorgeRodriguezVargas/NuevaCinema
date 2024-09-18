@@ -2,140 +2,183 @@
 #include <cstdlib> 
 #include "Movie.h"
 #include "Auditorium.h"
+#include "SalesTransaction.h"
 using namespace std;
 
 bool closeMenu = false;
-bool successfulReserve = false;
 
 void cleanWindow() {
-    cout << "Presiona Enter para continuar...";
+    cout << "\n Presiona Enter para continuar...";
     cin.ignore();
     cin.get();
     system("cls");
 }
 
-void archiveMenu(int button) {
+void archiveMenu() {
+    int option = 0;
     do{
-        cout << " Acerca de: 1\n";
-        cout << " Salir: 2\n";
-        cout << " Regresar: 3\n";
-        cin >> button;
+        cout << endl;
+        cout << " 1: Acerca de\n";
+        cout << " 2: Salir\n";
+        cout << " 3: Regresar\n";
+        cout << " Seleccione una opcion:";
+        cin >> option;
 
-        if (button == 1) {
-            system("cls");  
-            cout << "Estudiante: George Rodriguez Vargas\n \n \n";
+        system("cls");
+        if (option == 1) {
+            cout << "*** George Rodriguez Vargas ***\n";
         }
-        else if (button == 2) {
+        else if (option == 2) {
             closeMenu = true;
         }
-    } while (button == 1 || button == 0);
+        else if (option == 3) { 
+            break;
+        }
+        else {
+            cout << " * * Opcion invalida * *\n";
+        }
+        
+    } while (option == 1 || option == 0);
     cleanWindow();
 }
 
 void maintenanceMenu(Movie movies[], Auditorium& roomOne, Auditorium& roomTwo) {
     int option = 0;
     do {
-        
-        cout << "Mostrar peliculas disponibles: 1\n";
-        cout << "Mostrar Salas: 2\n";
-        cout << "Mostrar horarios: 3\n";
-        cout << "Regresar: 4\n";
-        cout << "\nSeleccione la opcion que desea realizar:";
-        cin >> option;
-
         cout << endl;
-        switch (option) {
-        case 1: {
+        cout << " 1: Mostrar peliculas disponibles\n";
+        cout << " 2: Mostrar Salas\n";
+        cout << " 3: Mostrar horarios\n";
+        cout << " 4: Regresar\n";
+        cout << " Seleccione la opcion que desea realizar: ";
+        cin >> option;
+       
+        system("cls");
+        if (option == 1) {
             for (int i = 0; i < 3; i++) {
                 movies[i].showMovieInformation();
             }
-            break;
         }
-        case 2: {
+        else if (option == 2) {
             roomOne.showAuditoriumInformation();
             roomTwo.showAuditoriumInformation();
-            break;
         }
-        case 3: {
+        else if (option == 3) {
             roomOne.showAuditoriumSchedules();
             roomTwo.showAuditoriumSchedules();
-            break;
         }
-        case 4: {
-            break;
-        }
-        default:
-            cout << "Opcion invalida\n";
-            break;
-        }
+    } while (option == 1 || option == 2 || option == 3 );
         cleanWindow();
-    } while (option != 4);
 }
 
-void reserveMenu(Movie movies[], Auditorium& roomOne, Auditorium& roomTwo) {
-    int movieSelect = -1; int option;
-    
+void reserveMenu(Movie movies[], Auditorium& roomOne, Auditorium& roomTwo, SalesTransaction& client) {
+    int rows, cols;
+    int movieSelect = 0; 
+    int option1, option2;
+   
     for (int i = 0; i < 3; i++) {
-        movies[i].showMovieInformation();
+        cout << i + 1 << ":"; movies[i].showMovieInformation();
     }
-    cout << " Seleccione la pelicula:";
+    cout << " \nSeleccione la pelicula:";
     cin >> movieSelect;
 
-    cout << endl;
-    roomOne.showMovieSchedules(movies[movieSelect - 1], roomTwo);
-    cout << " Elige un horario:";
-    cin >> option;
-    cout << endl;
-    roomOne.selectSchedule(option);
-    cout << " **Metodos aun no disponibles**\n \n";
-    //successfulReserve = true; Para validar el botón de venta.
+    system("cls");
+    roomOne.showMovieProjections(movies[movieSelect - 1], roomTwo);
+    cout << " \nSeleccione un horario:";
+    cin >> option1;
+
+   
+    do {
+        system("cls");
+        roomOne.selectSchedule(option1 - 1);
+
+        cout << " \n---- Seleccione los asientos que desea ----\n";
+        cout << " Fila:";
+        cin >> rows;
+        cout << " Asiento:";
+        cin >> cols;
+
+        roomOne.selectSeats(rows - 1, cols - 1, option1 - 1, client);
+       
+        cout << " Total: " << client.getTotalAmount() << endl;
+        cout << "\n 1: Finalizar reserva\n";
+        cout << " 2: Agregar otro asiento\n";
+        cout << " Seleccione una opcion:";
+        cin >> option2;
+
+    } while (option2 == 2);
+    client.setTransactionCode();
+    system("cls");
+
+    cout << "* * * * * Importante * * * * *\n";
+    cout << " Codigo de la transaccion: " << client.getTransactionCode();
     cleanWindow();
 }
 
-void saleMenu() {
-    if (!successfulReserve) {
-        cout << " Necesitas reservar\n";
-        cout << " **Metodos aun no disponibles**\n \n";
-    }
+void saleMenu(SalesTransaction& client) {
+    int code;
+    string ID_number, card_number;
+   
+        cout << " Ingrese el codigo de la transaccion: ";
+        cin >> code;
+
+        if (code == client.getTransactionCode()) {
+            cout << " Ingrese su numero de cedula\n";
+            cin >> ID_number;
+            cout << " Ingrese su tarjeta de credito\n";
+            cin >> card_number;
+
+            client.setId_number(ID_number);
+            client.setCard_number(card_number);
+
+            system("cls");
+            cout << "* * *Compra realizado con exito!* * *\n";
+            cout << "        Gracias por su compra\n";
+        }
+        else {
+            cout << " Codigo incorrecto \n";
+        }
     cleanWindow();
 }
-
 
 int main()
 {
+    SalesTransaction client;
+
     //Objetos de la clase película
-    Movie movieOne("Batman", "USA", "2h59m", " 7", 2022);
-    Movie movieTwo("Joker", "USA", "2h02m", "8.4", 2019);
-    Movie movieThree("Deadpool", "AUS", "2h07m", " 8", 2024);
+    Movie movieOne(" Batman ", "USA", "2h59m", " 7% ", 2022);
+    Movie movieTwo(" Joker  ", "USA", "2h02m", "8.4%", 2019);
+    Movie movieThree("Deadpool", "AUS", "2h07m", " 8% ", 2024);
     Movie movieList[3] = { movieOne, movieTwo, movieThree };
 
     //Objetos de la clase sala
-    Auditorium roomOne(1, 3, "3,000", "4 sept");
+    Auditorium roomOne(1, 3, 3000);
     roomOne.setMovieList(movieOne, "14:00", "17:30", "4 sept");
     roomOne.setMovieList(movieTwo, "18:00", "20:00", "4 sept");
     roomOne.setMovieList(movieTwo, "20:00", "22:30", "4 sept");
-    Auditorium roomTwo(2, 3, "4,000", "4 sept");
+
+    Auditorium roomTwo(2, 3, 4000);
     roomTwo.setMovieList(movieThree, "14:00", "16:30", "4 sept");
     roomTwo.setMovieList(movieOne, "17:00", "20:30", "4 sept");
     roomTwo.setMovieList(movieTwo, "21:00", "23:30", "4 sept");
-
-    int button = 0;
-    int selectOption;
-
+  
+    int optionSwitch;
     do{
-        cout << " Archivo: 1\n";
-        cout << " Mantenimiento: 2\n";
-        cout << " Reservar: 3\n";
-        cout << " Venta: 4\n";
+        cout << "             Nueva Cinema S.A\n";
+        cout << "------------------------------------------ \n";
+        cout << " 1: Archivo \n";
+        cout << " 2: Mantenimiento \n";
+        cout << " 3: Reserva \n";
+        cout << " 4: Venta \n";
         cout << " Seleccione una opcion:";
-        cin >> selectOption;
+        cin >> optionSwitch;
 
-        cin.ignore();
+        cin.ignore(); 
         system("cls");
 
-        switch (selectOption){
+        switch (optionSwitch){
         case 1: {
-            archiveMenu(button);
+            archiveMenu();
             break;
         }
         case 2: {
@@ -143,17 +186,17 @@ int main()
             break;
         }
         case 3: {
-            reserveMenu(movieList, roomOne, roomTwo);
+            reserveMenu(movieList, roomOne, roomTwo, client);
             break;
         }
         case 4: {
-            saleMenu();
+            saleMenu(client);
             break;
         }
         default:
-            cout << "Opcion invalida. Intentalo nuevamente." << endl;
+            cout << " Opcion invalida. Intentalo nuevamente.\n";
         }
-        button = 0;
+        
     }while (!closeMenu );
 }
 

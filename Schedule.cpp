@@ -6,16 +6,14 @@ Schedule::Schedule() {
 	endHour = " ";
 }
 
-void Schedule::setTimetable(string& start, string& end, string& date) {
+void Schedule::setTimetable(string& initialHour, string& endHour, string& date) {
 	this->date = date;
-	initialHour = start;
-	endHour = end;
+	this->initialHour = initialHour;
+	this->endHour = endHour;
 }
 
 string Schedule::getInitialHour() { return initialHour; }
 string Schedule::getEndHour() { return endHour; }
 string Schedule::getDate() { return date; }
 
-void Schedule::showScheduleInformation() {
-	cout << "| Fecha: " << getDate() << " |";
-}
+Schedule::~Schedule() {}

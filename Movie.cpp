@@ -28,10 +28,12 @@ string Movie::getReview() { return review; }
 int Movie::getYear() { return year; }
 
 void Movie::showMovieInformation() {
-	cout << "| Nombre: " << getName()
-		<< " | anio: " << getYear()
-		<< " | Duracion: " << getDuration()
-		<< " | Pais: " << getCountry()
-		<< " | Resenia: " << getReview() << " |"
+	cout << "| " << getName()
+		<< " | " << getYear()
+		<< " | " << getDuration()
+		<< " | " << getCountry()
+		<< " | " << getReview() << " |"
 		<< endl;
 }
+
+Movie::~Movie() {};

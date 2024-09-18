@@ -1,6 +1,7 @@
 #pragma once
-#include <iostream>;
 using namespace std;
+#include <iostream>
+
 
 class Schedule
 {
@@ -18,6 +19,6 @@ public:
 	string getEndHour();
 	string getDate();
 
-	void showScheduleInformation();
+	~Schedule();
 };
 
